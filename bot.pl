@@ -27,8 +27,8 @@ use OpsBot::Jabber qw(jabber);
   },
 );
 
-prepare();
-jabber();
+prepare(); # required for setting entry subroutines for different plugins, see Config.pm
+jabber(); # starts the ( jabber ) bot
 
 
   

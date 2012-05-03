@@ -16,7 +16,7 @@ sub initialize {
 
 my $datemanip = sub {
   my ( $date, $rt_tz, $desired_tz ) = @_;
-  $date = $date . " $rt_tz"; # sysrt time is in UTC
+  $date = $date . " $rt_tz"; # append timezone for DateTimeX::Easy to do conversion 
   my $dt = DateTimeX::Easy->parse($date);
   $dt->set_time_zone("$desired_tz");
   return $dt->day_abbr . " " . $dt->month_abbr . " " . $dt->day . " " . $dt->hms;
