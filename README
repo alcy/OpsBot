@@ -1,2 +1,5 @@
 OpsBot integrates with different pieces of your infra, modeled as plugins to provide information from those pieces & facilitate communication among ops.
 
+Currently jabber has been provided as the communication plugin, but plugins can be written for any comm medium, like irc etc. The main purpose of these is to 
+just get a message, find which plugin to send it to for further processing, and get the processed output back & send it.  
+

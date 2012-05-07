@@ -1,0 +1,7 @@
+Jabber:
+  - AnyEvent::XMPP
+RT:
+  - RT::Client::REST
+  - DateTimeX::Easy
+Nagios: 
+  - Monitoring::Livestatus
