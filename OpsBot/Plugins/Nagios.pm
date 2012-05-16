@@ -1,17 +1,16 @@
-package OpsBot::Nagios;
+package OpsBot::Plugins::Nagios;
 
 use strict;
 use warnings;
 require Exporter;
-our @EXPORT_OK = qw(&nagios);
-use OpsBot::Config;
+our @EXPORT_OK = qw(run);
 use Monitoring::Livestatus;
 
-sub nagios { 
-  my $msg_body = shift;
+sub run { 
+  my ($msg_body, $config) = @_;
   my $output='';
   my $ml = Monitoring::Livestatus->new(
-    server => "$plugins{nagios}->{server}:$plugins{nagios}->{port}"
+    server => "$config->{server}:$config->{port}"
   );
   my ($host) = ( $msg_body =~ /(?:^\!nagios) host=(\S+)/ );
   my %tmp=();

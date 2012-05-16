@@ -1,14 +1,13 @@
-package OpsBot::RT;
+package OpsBot::Plugins::RT;
 
 use strict;
 use warnings;
 require Exporter;
-our @EXPORT_OK = qw(process_rt);
+our @EXPORT_OK = qw(run);
 use DateTimeX::Easy;
 use RT::Client::REST;
-use OpsBot::Config;
 sub initialize {
-  my $conf = $plugins{rt}; 
+  my $conf = shift; 
   my @params = ( 'url', 'user', 'pass', 'rt_timezone', 'desired_timezone' );
   return my ( $url, $u, $p, $rt_tz, $desired_tz ) = map { $conf->{$_} } @params;
 }
@@ -22,9 +21,9 @@ my $datemanip = sub {
   return $dt->day_abbr . " " . $dt->month_abbr . " " . $dt->day . " " . $dt->hms;
 };
 
-sub process_rt {
-  my $msg_body = shift;
-  my ( $url, $u, $p, $rt_tz, $desired_tz ) = initialize();
+sub run {
+  my ( $msg_body, $config )  = @_;
+  my ( $url, $u, $p, $rt_tz, $desired_tz ) = initialize($config);
   my $rt = RT::Client::REST->new(
     server => $url,
     timeout => 30
