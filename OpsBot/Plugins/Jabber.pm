@@ -9,8 +9,7 @@ use AnyEvent::XMPP::Ext::Version;
 use AnyEvent::XMPP::Ext::MUC;
 use lib '../';
 use OpsBot::Packages qw(getPackage);
-use OpsBot::Plugins::RT qw(run);
-use OpsBot::Plugins::Nagios qw(run);
+use Module::Load;
 
 our $VERSION = 1.00;
 our @ISA = qw(Exporter);
@@ -44,7 +43,9 @@ my $parsemsg = sub {
 
   for my $plugin ( keys %infra_plugins ) { 
     if ( $body =~ /^\!$plugin/ ) {
-      my $pluginrun = getPackage($plugin) . "::run";
+      my $module = getPackage($plugin);
+      load $module, ':run';
+      my $pluginrun = $module . "::run";
       my $runref = \&$pluginrun;
       return $runref->($body, $infra->{$plugin});
     }
